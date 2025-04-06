@@ -177,42 +177,6 @@ def alpha_beta(board, depth, alpha, beta, maximizing_player):
         return best_move, min_eval
 
 
-def minimax(board, depth, maximizing_player):
-    best_move = None
-    possible_moves = get_possible_moves(board)
-
-    if depth == 0 or not possible_moves:
-        return None, evaluate_board(board)
-
-    max_score = max(board[r][c]['score'] for r, c in possible_moves)
-    best_moves = [(r, c) for r, c in possible_moves if board[r][c]['score'] == max_score]
-
-    if maximizing_player:
-        max_eval = -float('inf')
-        for move in best_moves:
-            apply_move(board, move, 'W')
-            huristic(board)
-            #huristic2(board)   #to switch active this and dactive the other one
-            _, eval = minimax(board, depth - 1, False)
-            undo_move(board, move)
-            if eval > max_eval:
-                max_eval = eval
-                best_move = move
-        return best_move, max_eval
-    else:
-        min_eval = float('inf')
-        for move in best_moves:
-            apply_move(board, move, 'B')
-            huristic(board)
-            #huristic2(board)   #to switch active this and dactive the other one
-            _, eval = minimax(board, depth - 1, True)
-            undo_move(board, move)
-            if eval < min_eval:
-                min_eval = eval
-                best_move = move
-        return best_move, min_eval
-
-
 
 def evaluate_board(board):
 
